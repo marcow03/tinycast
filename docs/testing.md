@@ -474,7 +474,7 @@ caches, TCC grants and login item, so this cannot disturb an installed copy.
   overlaps it; cancelling composition brings the placeholder back, and the list filters only once the
   candidate is committed — check on a second summon too, where first responder never moved
 - Typing filters instantly; ↑/↓ move the highlight and scroll it into view without yanking the list
-- ⌃N/⌃P move the highlight as ↓/↑ do; ⌃F/⌃B step compact shortcuts or the emoji grid's selection, and the caret elsewhere
+- ⌃N/⌃P and ⌃J/⌃K move the highlight as ↓/↑ do; ⌃F/⌃B and ⌃L⌃H step compact shortcuts or the emoji grid's selection, and the caret elsewhere
 - The highlight always sits on the row the footer pill describes
 - With a calculation typed, the calculator card is first and is selected first
 - ⌘↵ on a number, unit or money card puts the answer in the search bar with the caret after it, so

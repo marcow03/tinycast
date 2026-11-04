@@ -92,8 +92,8 @@ final class PalettePanel: NSPanel, AnimatedPanel {
         kVK_Return, kVK_ANSI_KeypadEnter, kVK_Escape, kVK_Tab
     ]
 
-    /// ⌃N/⌃P/⌃F/⌃B respelled as their arrow, so the arrow handlers serve both spellings.
-    private static func emacsArrow(for event: NSEvent) -> NSEvent? {
+    /// ⌃N/⌃P/ or ⌃J/⌃K (down/up) and ⌃F/⌃B or ⌃L/⌃H (right/left) respelled as their arrow, so the arrow handlers serve both spellings.
+    private static func handleEmacsOrVimArrow(for event: NSEvent) -> NSEvent? {
         guard event.modifierFlags.intersection([.command, .option, .control, .shift]) == .control
         else { return nil }
         let arrow: (key: KeyEquivalent, code: Int)
@@ -101,10 +101,11 @@ final class PalettePanel: NSPanel, AnimatedPanel {
         switch ASCIIKeyboardLayout.character(for: event)?.lowercased()
             ?? event.charactersIgnoringModifiers?.lowercased()
         {
-        case "n": arrow = (.downArrow, kVK_DownArrow)
-        case "p": arrow = (.upArrow, kVK_UpArrow)
-        case "f": arrow = (.rightArrow, kVK_RightArrow)
-        case "b": arrow = (.leftArrow, kVK_LeftArrow)
+        // Convert Emacs, Vim keys to arrow keys
+        case "n", "j": arrow = (.downArrow, kVK_DownArrow)
+        case "p", "k": arrow = (.upArrow, kVK_UpArrow)
+        case "f", "l": arrow = (.rightArrow, kVK_RightArrow)
+        case "b", "h": arrow = (.leftArrow, kVK_LeftArrow)
         default: return nil
         }
         let characters = String(arrow.key.character)
@@ -192,7 +193,7 @@ final class PalettePanel: NSPanel, AnimatedPanel {
         }
         defer { applyCursorPolicy(for: event) }
         // Before every other rule, so the arrows' own policies apply to the chords too.
-        if event.type == .keyDown, let arrow = Self.emacsArrow(for: event) {
+        if event.type == .keyDown, let arrow = Self.handleEmacsOrVimArrow(for: event) {
             sendEvent(arrow)
             return
         }

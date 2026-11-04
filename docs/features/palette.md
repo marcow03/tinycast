@@ -630,9 +630,9 @@ handled in `PalettePanel.sendEvent` before `super` hands the event to the respon
 Adding a chord that "does nothing" is almost always one of these — check `sendEvent`, and then
 whether macOS has claimed the chord, before assuming the handler is wrong.
 
-## Emacs navigation chords
+## Emacs and Vim navigation chords
 
-⌃N/⌃P and ⌃F/⌃B navigate exactly as ↓/↑ and →/← do. The collapsed bar uses the horizontal pair
+⌃N/⌃P (emacs), ⌃J/⌃K (vim) and ⌃F/⌃B (emacs), ⌃L/⌃H (vim) navigate exactly as ↓/↑ and →/← do. The collapsed bar uses the horizontal pair
 to select Search or a shortcut; on the emoji grid all four step the selection. Other screens leave
 the horizontal pair to the caret.
 
