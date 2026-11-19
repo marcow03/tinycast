@@ -53,6 +53,7 @@ struct SettingsBackup: Codable {
         var fileSearchIgnorePatterns: [String]?
         var fileSearchRemovedDefaultPatterns: [String]?
         var fileSearchShowInLauncher: Bool?
+        var fileSearchIncludesHiddenFiles: Bool?
         var notesEnabled: Bool?
         var notesRendersMarkdown: Bool?
         var notesShowsFormattingBar: Bool?
@@ -61,6 +62,7 @@ struct SettingsBackup: Codable {
         var customCommandsEnabled: Bool?
         var customCommandsShowInLauncher: Bool?
         var snippetsShowInLauncher: Bool?
+        var snippetDefaultAction: String?
         // Safe to carry: it grants no permission class paste doesn't already prompt for.
         var navigationEnabled: Bool?
         var menuSearchDisabledApps: [String]?
@@ -170,6 +172,7 @@ extension SettingsBackup {
             fileSearchIgnorePatterns: s.fileSearchIgnorePatterns,
             fileSearchRemovedDefaultPatterns: s.fileSearchRemovedDefaultPatterns,
             fileSearchShowInLauncher: s.fileSearchShowInLauncher,
+            fileSearchIncludesHiddenFiles: s.fileSearchIncludesHiddenFiles,
             notesEnabled: s.notesEnabled,
             notesRendersMarkdown: s.notesRendersMarkdown,
             notesShowsFormattingBar: s.notesShowsFormattingBar,
@@ -177,6 +180,7 @@ extension SettingsBackup {
             customCommandsEnabled: s.customCommandsEnabled,
             customCommandsShowInLauncher: s.customCommandsShowInLauncher,
             snippetsShowInLauncher: s.snippetsShowInLauncher,
+            snippetDefaultAction: s.snippetDefaultAction.rawValue,
             navigationEnabled: s.navigationEnabled,
             menuSearchDisabledApps: s.menuSearchDisabledApps,
             menuSearchShowsAppleMenu: s.menuSearchShowsAppleMenu,
@@ -446,6 +450,10 @@ extension SettingsBackup {
             settings.fileSearchShowInLauncher = flag
             count += 1
         }
+        if let flag = s.fileSearchIncludesHiddenFiles {
+            settings.fileSearchIncludesHiddenFiles = flag
+            count += 1
+        }
         if let flag = s.notesEnabled {
             settings.notesEnabled = flag
             count += 1
@@ -472,6 +480,10 @@ extension SettingsBackup {
         }
         if let flag = s.snippetsShowInLauncher {
             settings.snippetsShowInLauncher = flag
+            count += 1
+        }
+        if let raw = s.snippetDefaultAction, let action = SnippetDefaultAction(rawValue: raw) {
+            settings.snippetDefaultAction = action
             count += 1
         }
         if let flag = s.navigationEnabled {
